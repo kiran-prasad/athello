@@ -29,9 +29,9 @@ function skipMove( state ) {
   }
 }
 
-const makeMove = function ( state = initialState(), action ) {
+const makeMove = function ( state, action ) {
   const {currentPlayer, board, playerScores} = state,
-    pointsToReverse = BoardUtil.makeMove( action.col, action.row, board, currentPlayer );
+    discsToReverse = BoardUtil.makeMove( action.col, action.row, board, currentPlayer );
   let {validMoves, squaresFlipped, hasGameFinished} = state,
     nextPlayer = currentPlayer,
     newScores = playerScores,
@@ -40,16 +40,16 @@ const makeMove = function ( state = initialState(), action ) {
   if ( board[ action.row ][ action.col ] !== 0 ) {
     return state;
   }
-  if ( pointsToReverse[ 0 ] ) {
-    pointsToReverse.forEach( point => {
+  if ( discsToReverse[ 0 ] ) {
+    discsToReverse.forEach( point => {
       board[ point.y ][ point.x ] = currentPlayer;
     } );
     board[ action.row ][ action.col ] = currentPlayer;
     nextPlayer = -currentPlayer;
     validMoves = BoardUtil.getValidMoves( board, -currentPlayer );
     newScores = Object.assign( {}, {
-      [currentPlayer]: playerScores[ currentPlayer ] + pointsToReverse.length + 1,
-      [nextPlayer]: playerScores[ nextPlayer ] - pointsToReverse.length
+      [currentPlayer]: playerScores[ currentPlayer ] + discsToReverse.length + 1,
+      [nextPlayer]: playerScores[ nextPlayer ] - discsToReverse.length
     } );
     squaresFlipped = squaresFlipped + 1;
   } else {
