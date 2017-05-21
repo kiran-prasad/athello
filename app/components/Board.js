@@ -1,13 +1,10 @@
 import React, {PureComponent, PropTypes} from 'react';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+import * as actions from '../actions/appActions'
 import Row from './BoardRow';
 
 class Board extends PureComponent {
-
-  static PropTypes = {
-    board: PropTypes.array,
-    validMoves: PropTypes.array,
-    currentPlayer: PropTypes.string
-  };
 
   makeMove = () => {
     const {props} = this;
@@ -29,4 +26,6 @@ class Board extends PureComponent {
   }
 }
 
-module.exports = Board;
+export default connect( state => state, dispatch => ({
+  actions: bindActionCreators( actions, dispatch )
+}) )( Board )

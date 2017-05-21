@@ -1,26 +1,26 @@
-import PropTypes from 'prop-types'
 import React, {PureComponent} from 'react'
-import BoardContainer from './BoardContainer'
-import PlayerScore from './PlayerScore'
+import Board from './Board'
+import PlayerScore from './PlayerScore';
+import debounce from 'lodash.debounce';
 
 class App extends PureComponent {
 
-  state = {windowHeight: window.innerHeight};
+  state = { windowHeight: window.innerHeight };
 
   updateDimensions = () => {
-    this.setState({
+    this.setState( {
       windowHeight: window.innerHeight
-    });
+    } );
   };
 
-  componentDidMount(){
-    window.addEventListener("resize", this.updateDimensions);
+  componentDidMount() {
+    window.addEventListener( "resize", debounce(this.updateDimensions, 300) );
   }
 
-  render(){
-    return(
+  render() {
+    return (
       <div className="app-container" style={{ height: this.state.windowHeight, minWidth: 1000, minHeight: 500 }}>
-        <BoardContainer />
+        <Board />
         <PlayerScore/>
       </div>
     );
